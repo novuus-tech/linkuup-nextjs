@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Linkuup Medical - Next.js
 
-## Getting Started
+Application de gestion des rendez-vous médicaux et commerciaux, réécrite en **Next.js** avec backend et frontend unifiés.
 
-First, run the development server:
+## Stack technique
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Framework** : Next.js 16 (App Router)
+- **Base de données** : MongoDB + Mongoose
+- **Auth** : JWT (access + refresh token)
+- **État** : Redux Toolkit + TanStack React Query
+- **UI** : Tailwind CSS
+- **Validation** : Zod + React Hook Form
+
+## Structure du projet
+
+```
+linkuup-nextjs/
+├── src/
+│   ├── app/
+│   │   ├── (app)/              # Pages protégées (layout commun)
+│   │   │   ├── page.tsx        # Accueil (mes RDV)
+│   │   │   ├── admin/          # Administration
+│   │   │   ├── manager/        # Tableau de bord manager
+│   │   │   ├── users/          # Gestion utilisateurs
+│   │   │   ├── appointments/   # Édition RDV
+│   │   │   ├── about/
+│   │   │   └── unauthorized/
+│   │   ├── api/                # API Routes (backend intégré)
+│   │   │   ├── auth/           # signin, refreshtoken, logout
+│   │   │   ├── users/          # CRUD utilisateurs
+│   │   │   └── appointments/   # CRUD rendez-vous
+│   │   └── auth/signin/        # Page de connexion
+│   ├── components/
+│   ├── lib/
+│   │   ├── api/                # Clients API
+│   │   ├── hooks/              # React Query hooks
+│   │   ├── models/             # Modèles Mongoose
+│   │   ├── store/              # Redux
+│   │   └── utils/
+│   └── middleware.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Démarrage
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 1. Variables d'environnement
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Copiez `.env.example` vers `.env` et configurez :
 
-## Learn More
+```env
+MONGO_URL=mongodb://localhost:27017/linkuup
+JWT_SECRET=votre-secret-jwt
+COOKIE_SECRET=votre-secret-cookie
+NEXT_PUBLIC_ENCRYPTION_KEY=cle-chiffrement-client
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Base de données
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Démarrez MongoDB localement ou utilisez MongoDB Atlas
+- Les rôles (user, moderator, admin) sont créés automatiquement au premier signin
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 3. Lancer l'application
 
-## Deploy on Vercel
+```bash
+npm install
+npm run dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Ouvrez [http://localhost:3000](http://localhost:3000).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 4. Premier utilisateur
+
+Exécutez le script de seed pour créer un admin :
+
+```bash
+npm run seed
+```
+
+Identifiants : `admin@linkuup.com` / `admin123`
+
+## Rôles et permissions
+
+| Rôle       | Accès                                      |
+|------------|--------------------------------------------|
+| user       | Mes rendez-vous, création RDV              |
+| moderator  | + Manager (vue semaine), édition RDV        |
+| admin      | + Administration, utilisateurs, suppression |
+
+## Scripts
+
+- `npm run dev` - Développement
+- `npm run build` - Build production
+- `npm run start` - Démarrer en production
