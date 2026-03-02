@@ -12,6 +12,14 @@
   --card-border: rgba(226, 232, 240, 0.8);
   --muted: #64748b;
   --ring: #6366f1;
+  --danger: #ef4444;
+  --danger-muted: #fef2f2;
+  --warning: #f59e0b;
+  --warning-muted: #fffbeb;
+  --success: #10b981;
+  --success-muted: #ecfdf5;
+  --surface: #f8fafc;
+  --surface-hover: #f1f5f9;
 }
 
 /* Mode sombre : uniquement via la classe .dark sur html (choix utilisateur) */
@@ -23,6 +31,14 @@ html.dark {
   --card: #131827;
   --card-border: rgba(148, 163, 184, 0.1);
   --muted: #94a3b8;
+  --danger: #f87171;
+  --danger-muted: rgba(239, 68, 68, 0.15);
+  --warning: #fbbf24;
+  --warning-muted: rgba(245, 158, 11, 0.15);
+  --success: #34d399;
+  --success-muted: rgba(16, 185, 129, 0.15);
+  --surface: #1a1f35;
+  --surface-hover: #1e2540;
 }
 
 @theme inline {
@@ -37,6 +53,14 @@ html.dark {
   --color-card-border: var(--card-border);
   --color-muted: var(--muted);
   --color-ring: var(--ring);
+  --color-danger: var(--danger);
+  --color-danger-muted: var(--danger-muted);
+  --color-warning: var(--warning);
+  --color-warning-muted: var(--warning-muted);
+  --color-success: var(--success);
+  --color-success-muted: var(--success-muted);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
   --font-sans: var(--font-plus-jakarta), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
@@ -159,4 +183,91 @@ body {
 
 .dark .card-hover:hover {
   box-shadow: 0 12px 40px -12px rgba(0, 0, 0, 0.4);
+}
+
+/* Scale-in animation */
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out;
+}
+
+/* Shimmer animation for skeletons */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface) 25%,
+    var(--surface-hover) 50%,
+    var(--surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 0.5rem;
+}
+
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(30, 37, 64, 0.5) 25%,
+    rgba(42, 50, 80, 0.5) 50%,
+    rgba(30, 37, 64, 0.5) 75%
+  );
+  background-size: 200% 100%;
+}
+
+/* Shake animation for errors */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.animate-shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+/* Progress bar animation */
+@keyframes progress-fill {
+  from { width: 0%; }
+}
+
+.animate-progress {
+  animation: progress-fill 0.8s ease-out;
+}
+
+/* Stagger delay utility classes */
+.stagger-1 { animation-delay: 0.05s; animation-fill-mode: backwards; }
+.stagger-2 { animation-delay: 0.1s; animation-fill-mode: backwards; }
+.stagger-3 { animation-delay: 0.15s; animation-fill-mode: backwards; }
+.stagger-4 { animation-delay: 0.2s; animation-fill-mode: backwards; }
+
+/* Table row hover */
+.table-row-hover {
+  @apply transition-colors duration-150;
+}
+.table-row-hover:hover {
+  background-color: var(--surface);
+}
+.dark .table-row-hover:hover {
+  background-color: var(--surface-hover);
+}
+
+/* Overlay backdrop */
+.overlay-backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
 }

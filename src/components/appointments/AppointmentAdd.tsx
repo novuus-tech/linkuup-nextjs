@@ -90,8 +90,9 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
         <div>
           <label
             htmlFor="commercial"
-            className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-gray-300"
+            className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-slate-700 dark:text-gray-300"
           >
+            <svg className="h-4 w-4 text-muted" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
             Commercial
           </label>
           <select
@@ -114,8 +115,9 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
         </div>
 
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-gray-300">
-            Date & Heure
+          <label className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-slate-700 dark:text-gray-300">
+            <svg className="h-4 w-4 text-muted" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" /></svg>
+            {"Date & Heure"}
           </label>
           <div className="flex gap-3">
             <DatePicker
@@ -162,8 +164,9 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
       <div>
         <label
           htmlFor="name"
-          className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-gray-300"
+          className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-slate-700 dark:text-gray-300"
         >
+          <svg className="h-4 w-4 text-muted" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
           Nom complet
         </label>
         <input
@@ -183,9 +186,10 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
         <div>
           <label
             htmlFor="phone_1"
-            className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-gray-300"
+            className="mb-1.5 flex items-center gap-1.5 text-sm font-medium text-slate-700 dark:text-gray-300"
           >
-            Téléphone (fixe)
+            <svg className="h-4 w-4 text-muted" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" /></svg>
+            {"Telephone (fixe)"}
           </label>
           <input
             id="phone_1"

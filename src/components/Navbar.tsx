@@ -9,11 +9,17 @@ import { logout } from '@/lib/store/slices/authSlice';
 import { useTheme } from '@/components/ThemeProvider';
 
 const navLinkClass = (active: boolean) =>
-  `px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+  `relative px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
     active
       ? 'bg-indigo-500/15 text-indigo-600 dark:text-indigo-400'
       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white'
   }`;
+
+const roleLabel = (roles: string[]) => {
+  if (roles.includes('ROLE_ADMIN')) return 'Administrateur';
+  if (roles.includes('ROLE_MODERATOR')) return 'Manager';
+  return 'Utilisateur';
+};
 
 export function Navbar() {
   const [mounted, setMounted] = useState(false);
@@ -63,12 +69,20 @@ export function Navbar() {
                   Manager
                 </Link>
                 {hasRole('ROLE_ADMIN') && (
-                  <Link
-                    href="/admin"
-                    className={navLinkClass(pathname === '/admin')}
-                  >
-                    Admin
-                  </Link>
+                  <>
+                    <Link
+                      href="/admin"
+                      className={navLinkClass(pathname === '/admin')}
+                    >
+                      Admin
+                    </Link>
+                    <Link
+                      href="/users"
+                      className={navLinkClass(pathname === '/users')}
+                    >
+                      Utilisateurs
+                    </Link>
+                  </>
                 )}
               </>
             )}
@@ -76,7 +90,7 @@ export function Navbar() {
               href="/about"
               className={navLinkClass(pathname === '/about')}
             >
-              À propos
+              {"A propos"}
             </Link>
           </div>
         </div>
@@ -106,7 +120,7 @@ export function Navbar() {
                 className="fixed inset-0 z-40"
                 onClick={() => setUserMenuOpen(false)}
               />
-              <div className="absolute right-4 top-16 z-50 w-64 animate-slide-down rounded-2xl border border-slate-200 bg-white py-2 shadow-xl dark:border-slate-700 dark:bg-slate-900">
+              <div className="absolute right-4 top-16 z-50 w-64 animate-scale-in rounded-2xl border border-slate-200 bg-white py-2 shadow-xl dark:border-slate-700 dark:bg-slate-900">
                 <div className="border-b border-slate-100 px-4 py-3 dark:border-slate-700">
                   <p className="text-sm font-semibold text-slate-900 dark:text-white">
                     {user?.firstName} {user?.lastName}
@@ -114,6 +128,9 @@ export function Navbar() {
                   <p className="truncate text-xs text-slate-500 dark:text-slate-400">
                     {user?.email}
                   </p>
+                  <span className="mt-1.5 inline-flex items-center rounded-lg bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400">
+                    {roleLabel(roles)}
+                  </span>
                 </div>
                 <button
                   type="button"
@@ -162,7 +179,7 @@ export function Navbar() {
       </nav>
 
       {menuOpen && (
-        <div className="border-t border-slate-200 px-4 py-3 md:hidden dark:border-slate-800">
+        <div className="animate-slide-down border-t border-slate-200 px-4 py-3 md:hidden dark:border-slate-800">
           <div className="flex flex-col gap-1">
             <Link href="/" className={navLinkClass(pathname === '/')} onClick={() => setMenuOpen(false)}>
               Accueil
@@ -173,14 +190,19 @@ export function Navbar() {
                   Manager
                 </Link>
                 {hasRole('ROLE_ADMIN') && (
-                  <Link href="/admin" className={navLinkClass(pathname === '/admin')} onClick={() => setMenuOpen(false)}>
-                    Admin
-                  </Link>
+                  <>
+                    <Link href="/admin" className={navLinkClass(pathname === '/admin')} onClick={() => setMenuOpen(false)}>
+                      Admin
+                    </Link>
+                    <Link href="/users" className={navLinkClass(pathname === '/users')} onClick={() => setMenuOpen(false)}>
+                      Utilisateurs
+                    </Link>
+                  </>
                 )}
               </>
             )}
             <Link href="/about" className={navLinkClass(pathname === '/about')} onClick={() => setMenuOpen(false)}>
-              À propos
+              {"A propos"}
             </Link>
           </div>
         </div>

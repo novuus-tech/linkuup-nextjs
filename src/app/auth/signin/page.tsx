@@ -43,8 +43,16 @@ export default function SignInPage() {
   return (
     <div className="flex min-h-screen w-full">
       {/* Left: Branding / Illustration */}
-      <div className="hidden w-1/2 flex-col justify-between bg-gradient-to-br from-indigo-600 via-indigo-700 to-indigo-900 p-12 lg:flex">
-        <div className="flex items-center gap-3">
+      <div className="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-gradient-to-br from-indigo-600 via-indigo-700 to-indigo-900 p-12 lg:flex">
+        {/* Decorative floating shapes */}
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/5 animate-[pulse_6s_ease-in-out_infinite]" />
+          <div className="absolute -bottom-20 -left-20 h-80 w-80 rounded-full bg-indigo-400/10 animate-[pulse_8s_ease-in-out_infinite_1s]" />
+          <div className="absolute right-1/4 top-1/3 h-32 w-32 rounded-2xl bg-white/5 rotate-12 animate-[pulse_7s_ease-in-out_infinite_2s]" />
+          <div className="absolute left-1/3 bottom-1/4 h-20 w-20 rounded-full bg-indigo-300/10 animate-[pulse_5s_ease-in-out_infinite_0.5s]" />
+        </div>
+
+        <div className="relative z-10 flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/20 text-white backdrop-blur">
             <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -52,35 +60,52 @@ export default function SignInPage() {
           </div>
           <span className="text-xl font-bold text-white">Linkuup Medical</span>
         </div>
-        <div className="space-y-6">
-          <h2 className="text-3xl font-bold leading-tight text-white">
-            Gérez vos rendez-vous
+        <div className="relative z-10 space-y-6">
+          <h2 className="text-3xl font-bold leading-tight text-white text-balance">
+            {"Gerez vos rendez-vous"}
             <br />
             <span className="text-indigo-200">sans effort</span>
           </h2>
-          <p className="max-w-sm text-indigo-100">
-            Planification, suivi et gestion des rendez-vous médicaux et commerciaux en un seul endroit.
+          <p className="max-w-sm text-indigo-100 leading-relaxed">
+            {"Planification, suivi et gestion des rendez-vous medicaux et commerciaux en un seul endroit."}
           </p>
-          <div className="flex gap-6 pt-4">
-            <div className="flex items-center gap-2 text-white/90">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20">
+          <div className="flex flex-col gap-4 pt-4">
+            <div className="flex items-center gap-3 text-white/90">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <span className="text-sm font-medium">Planning</span>
+              <div>
+                <p className="text-sm font-semibold">Planning intelligent</p>
+                <p className="text-xs text-indigo-200/80">{"Organisez vos journees efficacement"}</p>
+              </div>
             </div>
-            <div className="flex items-center gap-2 text-white/90">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20">
+            <div className="flex items-center gap-3 text-white/90">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
                 <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <span className="text-sm font-medium">Suivi</span>
+              <div>
+                <p className="text-sm font-semibold">Suivi en temps reel</p>
+                <p className="text-xs text-indigo-200/80">{"Visualisez l'avancement de votre equipe"}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 text-white/90">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-semibold">{"Gestion d'equipe"}</p>
+                <p className="text-xs text-indigo-200/80">{"Coordonnez vos collaborateurs facilement"}</p>
+              </div>
             </div>
           </div>
         </div>
-        <p className="text-sm text-indigo-200/80">© {new Date().getFullYear()} Linkuup Medical</p>
+        <p className="relative z-10 text-sm text-indigo-200/80">{"© "}{new Date().getFullYear()}{" Linkuup Medical"}</p>
       </div>
 
       {/* Right: Form */}
@@ -100,56 +125,67 @@ export default function SignInPage() {
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               Connexion
             </h1>
-            <p className="mt-2 text-slate-600 dark:text-slate-400">
-              Entrez vos identifiants pour accéder à votre espace
+            <p className="mt-2 text-slate-600 dark:text-slate-400 leading-relaxed">
+              {"Entrez vos identifiants pour acceder a votre espace"}
             </p>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
             <div>
-              <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
+              <label htmlFor="email" className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <svg className="h-4 w-4 text-muted" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
                 Email
               </label>
               <input
                 id="email"
                 type="email"
                 placeholder="nom@linkuup.com"
-                className={inputField()}
+                className={inputField(!!errors.email)}
                 {...register('email')}
               />
               {errors.email && (
-                <p className="mt-1.5 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1.5 animate-slide-down text-sm text-red-600 dark:text-red-400">
                   {errors.email.message}
                 </p>
               )}
             </div>
 
             <div>
-              <label htmlFor="password" className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
+              <label htmlFor="password" className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
+                <svg className="h-4 w-4 text-muted" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </svg>
                 Mot de passe
               </label>
               <input
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                className={inputField()}
+                className={inputField(!!errors.password)}
                 {...register('password')}
               />
               {errors.password && (
-                <p className="mt-1.5 text-sm text-red-600 dark:text-red-400">
+                <p className="mt-1.5 animate-slide-down text-sm text-red-600 dark:text-red-400">
                   {errors.password.message}
                 </p>
               )}
             </div>
 
-            <button type="submit" disabled={isSubmitting} className={btnPrimary}>
+            <button type="submit" disabled={isSubmitting} className={`${btnPrimary} disabled:opacity-70`}>
               {isSubmitting ? (
                 <span className="flex items-center gap-2">
                   <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   Connexion...
                 </span>
               ) : (
-                'Se connecter'
+                <span className="flex items-center gap-2">
+                  Se connecter
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
               )}
             </button>
           </form>
