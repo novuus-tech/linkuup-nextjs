@@ -12,7 +12,7 @@ import { useCreateAppointment } from '@/lib/hooks/useAppointments';
 import { useCommercials } from '@/lib/hooks/useUsers';
 import { TIME_SLOTS } from '@/lib/types/appointment';
 import { Button } from '@/components/ui/button';
-import { Input, TextArea } from '@/components/ui/input';
+import { Input, Textarea } from '@/components/ui/input';
 import { Select } from '@/components/ui/select';
 
 const appointmentSchema = z.object({
@@ -164,7 +164,7 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
         {...register('address')}
       />
 
-      <TextArea
+      <Textarea
         label="Commentaire"
         placeholder="Notes..."
         rows={3}
