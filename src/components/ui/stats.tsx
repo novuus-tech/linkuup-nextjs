@@ -3,47 +3,38 @@ import { type ReactNode } from 'react';
 interface StatCardProps {
   title: string;
   value: string | number;
-  change?: {
-    value: number;
-    label: string;
-  };
+  subtitle?: string;
   icon?: ReactNode;
-  variant?: 'default' | 'success' | 'warning' | 'info';
+  variant?: 'default' | 'success' | 'warning' | 'info' | 'danger';
+  trend?: 'up' | 'down' | 'neutral';
 }
 
 const variantStyles = {
   default: {
     icon: 'bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400',
-    change: {
-      positive: 'text-emerald-600 dark:text-emerald-400',
-      negative: 'text-red-600 dark:text-red-400',
-    },
   },
   success: {
     icon: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400',
-    change: {
-      positive: 'text-emerald-600 dark:text-emerald-400',
-      negative: 'text-red-600 dark:text-red-400',
-    },
   },
   warning: {
     icon: 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400',
-    change: {
-      positive: 'text-emerald-600 dark:text-emerald-400',
-      negative: 'text-red-600 dark:text-red-400',
-    },
   },
   info: {
     icon: 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400',
-    change: {
-      positive: 'text-emerald-600 dark:text-emerald-400',
-      negative: 'text-red-600 dark:text-red-400',
-    },
+  },
+  danger: {
+    icon: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400',
   },
 };
 
-export function StatCard({ title, value, change, icon, variant = 'default' }: StatCardProps) {
-  const styles = variantStyles[variant];
+export function StatCard({ title, value, subtitle, icon, variant = 'default', trend }: StatCardProps) {
+  const styles = variantStyles[variant] || variantStyles.default;
+
+  const trendColors = {
+    up: 'text-emerald-600 dark:text-emerald-400',
+    down: 'text-red-600 dark:text-red-400',
+    neutral: 'text-slate-500 dark:text-slate-400',
+  };
 
   return (
     <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-700/50 dark:bg-slate-900/50 card-hover">
@@ -53,25 +44,19 @@ export function StatCard({ title, value, change, icon, variant = 'default' }: St
           <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
             {value}
           </p>
-          {change && (
-            <p
-              className={`mt-1 flex items-center gap-1 text-sm font-medium ${
-                change.value >= 0 ? styles.change.positive : styles.change.negative
-              }`}
-            >
-              {change.value >= 0 ? (
+          {subtitle && (
+            <p className={`mt-1 flex items-center gap-1 text-sm font-medium ${trend ? trendColors[trend] : 'text-slate-500 dark:text-slate-400'}`}>
+              {trend === 'up' && (
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
                 </svg>
-              ) : (
+              )}
+              {trend === 'down' && (
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                 </svg>
               )}
-              <span>
-                {change.value >= 0 ? '+' : ''}
-                {change.value}% {change.label}
-              </span>
+              <span>{subtitle}</span>
             </p>
           )}
         </div>
