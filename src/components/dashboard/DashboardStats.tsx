@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/lib/store';
 import { appointmentsApi } from '@/lib/api/appointments';
-import { StatsCard, StatsGrid } from '@/components/ui/stats';
+import { StatCard, StatsGrid } from '@/components/ui/stats';
 import { SkeletonStats } from '@/components/ui/skeleton';
 import type { AppointmentStatus } from '@/lib/types/appointment';
 
@@ -82,7 +82,7 @@ export function DashboardStats({ refreshTrigger }: DashboardStatsProps) {
 
   return (
     <StatsGrid>
-      <StatsCard
+      <StatCard
         title="Total ce mois"
         value={stats.total}
         subtitle={`${stats.thisWeekCount} cette semaine`}
@@ -93,7 +93,7 @@ export function DashboardStats({ refreshTrigger }: DashboardStatsProps) {
         }
         trend={stats.total > 0 ? 'up' : 'neutral'}
       />
-      <StatsCard
+      <StatCard
         title="En attente"
         value={stats.pending}
         subtitle={`${stats.toBeReminded} à rappeler`}
@@ -104,7 +104,7 @@ export function DashboardStats({ refreshTrigger }: DashboardStatsProps) {
         }
         variant="warning"
       />
-      <StatsCard
+      <StatCard
         title="Confirmés"
         value={stats.confirmed}
         subtitle={`${stats.confirmationRate}% de confirmation`}
@@ -116,7 +116,7 @@ export function DashboardStats({ refreshTrigger }: DashboardStatsProps) {
         variant="success"
         trend={stats.confirmationRate >= 50 ? 'up' : 'down'}
       />
-      <StatsCard
+      <StatCard
         title="Annulés"
         value={stats.cancelled}
         subtitle="Ce mois-ci"
