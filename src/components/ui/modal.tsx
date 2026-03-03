@@ -40,7 +40,7 @@ export function Modal({ isOpen, onClose, title, children, size = 'lg' }: ModalPr
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 anim-fade-in"
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? 'modal-title' : undefined}
@@ -58,7 +58,7 @@ export function Modal({ isOpen, onClose, title, children, size = 'lg' }: ModalPr
           relative w-full ${sizeStyles[size]} max-h-[90vh] overflow-hidden
           rounded-2xl border border-slate-200 bg-white shadow-2xl
           dark:border-slate-700 dark:bg-slate-900
-          animate-slide-up
+          anim-slide-up
         `}
       >
         {title && (

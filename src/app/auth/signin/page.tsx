@@ -85,7 +85,7 @@ export default function SignInPage() {
 
       {/* Right: Form */}
       <div className="flex w-full items-center justify-center bg-white p-8 dark:bg-slate-950 lg:w-1/2">
-        <div className="w-full max-w-md animate-slide-up">
+        <div className="w-full max-w-md anim-slide-up">
           <div className="mb-10 lg:hidden">
             <div className="flex items-center gap-2.5">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white">

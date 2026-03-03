@@ -90,15 +90,41 @@ html.dark {
 }
 
 /* Animation utility classes */
-.animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
-.animate-shimmer { animation: shimmer 1.5s ease-in-out infinite; }
-.animate-scale-in { animation: scale-in 0.2s ease-out; }
-.animate-bounce-in { animation: bounce-in 0.4s ease-out; }
-.animate-slide-in-right { animation: slide-in-right 0.3s ease-out; }
-.animate-slide-out-right { animation: slide-out-right 0.2s ease-out forwards; }
-.animate-slide-down { animation: slide-down 0.25s ease-out; }
-.animate-fade-in { animation: fade-in 0.3s ease-out; }
-.animate-slide-up { animation: slide-up 0.3s ease-out; }
+@utility anim-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+@utility anim-shimmer {
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@utility anim-scale-in {
+  animation: scale-in 0.2s ease-out;
+}
+
+@utility anim-bounce-in {
+  animation: bounce-in 0.4s ease-out;
+}
+
+@utility anim-slide-in-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+@utility anim-slide-out-right {
+  animation: slide-out-right 0.2s ease-out forwards;
+}
+
+@utility anim-slide-down {
+  animation: slide-down 0.25s ease-out;
+}
+
+@utility anim-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+@utility anim-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
 
 body {
   background: var(--background);
@@ -345,7 +371,7 @@ body {
   border-radius: 9999px;
 }
 
-.status-dot-pulse {
+@utility status-dot-pulse {
   animation: pulse-soft 2s ease-in-out infinite;
 }
 

@@ -106,7 +106,7 @@ export function Navbar() {
                 className="fixed inset-0 z-40"
                 onClick={() => setUserMenuOpen(false)}
               />
-              <div className="absolute right-4 top-16 z-50 w-64 animate-slide-down rounded-2xl border border-slate-200 bg-white py-2 shadow-xl dark:border-slate-700 dark:bg-slate-900">
+              <div className="absolute right-4 top-16 z-50 w-64 anim-slide-down rounded-2xl border border-slate-200 bg-white py-2 shadow-xl dark:border-slate-700 dark:bg-slate-900">
                 <div className="border-b border-slate-100 px-4 py-3 dark:border-slate-700">
                   <p className="text-sm font-semibold text-slate-900 dark:text-white">
                     {user?.firstName} {user?.lastName}

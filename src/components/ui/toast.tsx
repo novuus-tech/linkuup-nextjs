@@ -143,7 +143,7 @@ function ToastItem({ toast, onRemove }: ToastItemProps) {
     <div
       className={`
         flex items-center gap-3 rounded-xl border px-4 py-3 shadow-lg backdrop-blur-sm
-        animate-slide-up min-w-[280px] max-w-md
+        anim-slide-up min-w-[280px] max-w-md
         ${style.bg}
       `}
       role="alert"
