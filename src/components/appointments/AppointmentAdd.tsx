@@ -64,7 +64,7 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
   const onSubmit = async (data: AppointmentForm) => {
     const userId = user?.id ?? (user as { _id?: string })?._id ?? '';
     if (!userId) {
-      dispatch(error('Session expirée. Veuillez vous reconnecter.'));
+      dispatch(error('Session expiree. Veuillez vous reconnecter.'));
       return;
     }
 
@@ -72,11 +72,11 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
 
     try {
       await createMutation.mutateAsync({ userId, data: payload });
-      dispatch(success('Rendez-vous créé avec succès'));
+      dispatch(success('Rendez-vous cree avec succes'));
       reset();
       onClose();
     } catch {
-      // Erreur affichée via MutationCache (alert global)
+      // Erreur affichee via MutationCache (alert global)
     }
   };
 
@@ -88,7 +88,7 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
           error={errors.commercial?.message}
           {...register('commercial')}
         >
-          <option value="">Sélectionner un commercial</option>
+          <option value="">Selectionner un commercial</option>
           {commercials.map((c) => (
             <option key={c.id} value={c.slug}>
               {c.fullName}
@@ -97,7 +97,7 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
         </Select>
 
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-gray-300">
+          <label className="mb-1.5 block text-sm font-medium text-zinc-300">
             Date & Heure
           </label>
           <div className="flex gap-3">
@@ -131,7 +131,7 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
             </Select>
           </div>
           {errors.date && (
-            <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+            <p className="mt-1 text-sm text-red-400">
               {errors.date.message}
             </p>
           )}
@@ -147,12 +147,12 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Input
-          label="Téléphone (fixe)"
+          label="Telephone (fixe)"
           placeholder="Fixe"
           {...register('phone_1')}
         />
         <Input
-          label="Téléphone (mobile)"
+          label="Telephone (mobile)"
           placeholder="Mobile"
           {...register('phone_2')}
         />
@@ -171,15 +171,15 @@ export function AppointmentAdd({ onClose }: AppointmentAddProps) {
         {...register('comment')}
       />
 
-      <div className="flex justify-end gap-3 border-t border-slate-200 pt-6 dark:border-slate-700">
+      <div className="flex justify-end gap-3 border-t border-zinc-800 pt-5">
+        <Button type="button" variant="outline" onClick={onClose}>
+          Annuler
+        </Button>
         <Button
           type="submit"
           isLoading={isSubmitting || createMutation.isPending}
         >
           Enregistrer
-        </Button>
-        <Button type="button" variant="outline" onClick={onClose}>
-          Annuler
         </Button>
       </div>
     </form>

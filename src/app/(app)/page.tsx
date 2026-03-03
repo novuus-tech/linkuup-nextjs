@@ -1,13 +1,11 @@
 'use client';
 
-// Force rebuild - v2
 import { useState } from 'react';
 import { AppointmentList } from '@/components/appointments/AppointmentList';
 import { AppointmentAdd } from '@/components/appointments/AppointmentAdd';
 import { DashboardStats } from '@/components/dashboard/DashboardStats';
 import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
-import { Card, CardContent } from '@/components/ui/card';
 
 export default function HomePage() {
   const [openModal, setOpenModal] = useState(false);
@@ -19,35 +17,36 @@ export default function HomePage() {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
-            Mes rendez-vous
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-100 sm:text-3xl">
+            Tableau de bord
           </h1>
-          <p className="mt-2 text-slate-600 dark:text-slate-400">
-            Gérez vos rendez-vous et consultez l&apos;historique
+          <p className="mt-1 text-zinc-500">
+            Gerez vos rendez-vous et consultez les statistiques
           </p>
         </div>
         <Button
           onClick={() => setOpenModal(true)}
           icon={
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
           }
         >
-          Nouveau rendez-vous
+          Nouveau RDV
         </Button>
       </div>
 
       <DashboardStats refreshTrigger={refreshTrigger} />
 
-      <Card>
-        <CardContent className="p-0">
-          <AppointmentList refreshTrigger={refreshTrigger} />
-        </CardContent>
-      </Card>
+      <div className="rounded-xl border border-zinc-800 bg-zinc-900">
+        <div className="border-b border-zinc-800 px-6 py-4">
+          <h2 className="text-lg font-semibold text-zinc-100">Rendez-vous recents</h2>
+        </div>
+        <AppointmentList refreshTrigger={refreshTrigger} />
+      </div>
 
       <Modal
         isOpen={openModal}

@@ -1,14 +1,15 @@
+'use client';
+
 import { forwardRef, type InputHTMLAttributes, type ReactNode } from 'react';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
   leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, leftIcon, rightIcon, className = '', id, ...props }, ref) => {
+  ({ label, error, leftIcon, className = '', id, ...props }, ref) => {
     const inputId = id || props.name;
 
     return (
@@ -16,14 +17,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+            className="mb-1.5 block text-sm font-medium text-zinc-300"
           >
             {label}
           </label>
         )}
         <div className="relative">
           {leftIcon && (
-            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-500">
               {leftIcon}
             </div>
           )}
@@ -31,29 +32,22 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={`
-              block w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-slate-900
-              placeholder-slate-400 transition-all
+              block w-full rounded-lg border bg-zinc-900 px-4 py-2.5 text-sm text-zinc-100
+              placeholder-zinc-500 transition-all
               focus:outline-none focus:ring-2
-              dark:bg-slate-800/50 dark:text-white dark:placeholder-slate-500
               ${leftIcon ? 'pl-10' : ''}
-              ${rightIcon ? 'pr-10' : ''}
               ${
                 error
-                  ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20 dark:border-red-500'
-                  : 'border-slate-200 focus:border-indigo-500 focus:ring-indigo-500/20 dark:border-slate-600 dark:focus:border-indigo-400 dark:focus:ring-indigo-500/25'
+                  ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20'
+                  : 'border-zinc-800 focus:border-emerald-500 focus:ring-emerald-500/20'
               }
               ${className}
             `}
             {...props}
           />
-          {rightIcon && (
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400">
-              {rightIcon}
-            </div>
-          )}
         </div>
         {error && (
-          <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
+          <p className="mt-1 text-sm text-red-400">{error}</p>
         )}
       </div>
     );
@@ -76,7 +70,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         {label && (
           <label
             htmlFor={textareaId}
-            className="mb-1.5 block text-sm font-medium text-slate-700 dark:text-slate-300"
+            className="mb-1.5 block text-sm font-medium text-zinc-300"
           >
             {label}
           </label>
@@ -85,21 +79,20 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           ref={ref}
           id={textareaId}
           className={`
-            block w-full resize-none rounded-xl border bg-white px-4 py-2.5 text-sm text-slate-900
-            placeholder-slate-400 transition-all
+            block w-full resize-none rounded-lg border bg-zinc-900 px-4 py-2.5 text-sm text-zinc-100
+            placeholder-zinc-500 transition-all
             focus:outline-none focus:ring-2
-            dark:bg-slate-800/50 dark:text-white dark:placeholder-slate-500
             ${
               error
-                ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20 dark:border-red-500'
-                : 'border-slate-200 focus:border-indigo-500 focus:ring-indigo-500/20 dark:border-slate-600 dark:focus:border-indigo-400 dark:focus:ring-indigo-500/25'
+                ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20'
+                : 'border-zinc-800 focus:border-emerald-500 focus:ring-emerald-500/20'
             }
             ${className}
           `}
           {...props}
         />
         {error && (
-          <p className="mt-1 text-sm text-red-600 dark:text-red-400">{error}</p>
+          <p className="mt-1 text-sm text-red-400">{error}</p>
         )}
       </div>
     );

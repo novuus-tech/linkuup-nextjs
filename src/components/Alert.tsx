@@ -43,19 +43,19 @@ export function Alert() {
     <div className="fixed bottom-4 right-4 z-50">
       <div
         className={cn(
-          'flex items-center gap-3 rounded-xl border px-4 py-3 shadow-lg backdrop-blur-sm',
+          'flex items-center gap-3 rounded-lg border px-4 py-3 shadow-xl',
           'transition-all duration-200',
           isExiting ? 'anim-slide-out-right' : 'anim-slide-in-right',
           isSuccess
-            ? 'border-emerald-200/50 bg-emerald-50/95 text-emerald-800 dark:border-emerald-800/50 dark:bg-emerald-950/95 dark:text-emerald-300'
-            : 'border-red-200/50 bg-red-50/95 text-red-800 dark:border-red-800/50 dark:bg-red-950/95 dark:text-red-300'
+            ? 'border-emerald-500/20 bg-emerald-500/10 text-emerald-400'
+            : 'border-red-500/20 bg-red-500/10 text-red-400'
         )}
       >
         <div className={cn(
-          'flex h-8 w-8 shrink-0 items-center justify-center rounded-full',
+          'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg',
           isSuccess
-            ? 'bg-emerald-100 dark:bg-emerald-900/50'
-            : 'bg-red-100 dark:bg-red-900/50'
+            ? 'bg-emerald-500/20'
+            : 'bg-red-500/20'
         )}>
           {isSuccess ? (
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,10 +68,10 @@ export function Alert() {
           )}
         </div>
         <div className="flex-1 pr-2">
-          <p className="text-sm font-semibold">
-            {isSuccess ? 'Succès' : 'Erreur'}
+          <p className="text-sm font-medium">
+            {isSuccess ? 'Succes' : 'Erreur'}
           </p>
-          <p className="text-sm opacity-90">{message}</p>
+          <p className="text-sm opacity-80">{message}</p>
         </div>
         <button
           type="button"
@@ -79,8 +79,8 @@ export function Alert() {
           className={cn(
             'rounded-lg p-1.5 transition-colors',
             isSuccess
-              ? 'hover:bg-emerald-100 dark:hover:bg-emerald-900/50'
-              : 'hover:bg-red-100 dark:hover:bg-red-900/50'
+              ? 'hover:bg-emerald-500/20'
+              : 'hover:bg-red-500/20'
           )}
         >
           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

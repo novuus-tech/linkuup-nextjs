@@ -1,3 +1,5 @@
+'use client';
+
 import { type HTMLAttributes, type ReactNode, forwardRef } from 'react';
 
 export type BadgeVariant = 'default' | 'success' | 'warning' | 'error' | 'info' | 'muted';
@@ -8,12 +10,12 @@ interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  default: 'text-indigo-800 bg-indigo-100 dark:text-indigo-300 dark:bg-indigo-900/30',
-  success: 'text-emerald-800 bg-emerald-100 dark:text-emerald-300 dark:bg-emerald-900/30',
-  warning: 'text-amber-800 bg-amber-100 dark:text-amber-300 dark:bg-amber-900/30',
-  error: 'text-red-800 bg-red-100 dark:text-red-300 dark:bg-red-900/30',
-  info: 'text-blue-800 bg-blue-100 dark:text-blue-300 dark:bg-blue-900/30',
-  muted: 'text-slate-700 bg-slate-100 dark:text-slate-300 dark:bg-slate-700/50',
+  default: 'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
+  success: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+  warning: 'text-amber-400 bg-amber-500/10 border-amber-500/20',
+  error: 'text-red-400 bg-red-500/10 border-red-500/20',
+  info: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
+  muted: 'text-zinc-400 bg-zinc-500/10 border-zinc-500/20',
 };
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
@@ -21,7 +23,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
     return (
       <span
         ref={ref}
-        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${variantStyles[variant]} ${className}`}
+        className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${variantStyles[variant]} ${className}`}
         {...props}
       >
         {children}
@@ -43,11 +45,11 @@ export type AppointmentStatus =
 
 const STATUS_LABELS: Record<AppointmentStatus, string> = {
   pending: 'En attente',
-  confirmed: 'Confirmé',
-  cancelled: 'Annulé',
-  'not-interested': 'Non intéressé',
-  'to-be-reminded': 'À rappeler',
-  'longest-date': 'Date éloignée',
+  confirmed: 'Confirme',
+  cancelled: 'Annule',
+  'not-interested': 'Non interesse',
+  'to-be-reminded': 'A rappeler',
+  'longest-date': 'Date eloignee',
 };
 
 const STATUS_VARIANTS: Record<AppointmentStatus, BadgeVariant> = {

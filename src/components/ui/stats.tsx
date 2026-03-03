@@ -13,19 +13,24 @@ interface StatCardProps {
 
 const variantStyles = {
   default: {
-    icon: 'bg-indigo-100 text-indigo-600 dark:bg-indigo-900/30 dark:text-indigo-400',
+    icon: 'bg-zinc-800 text-zinc-400',
+    border: 'border-zinc-800',
   },
   success: {
-    icon: 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400',
+    icon: 'bg-emerald-500/10 text-emerald-500',
+    border: 'border-emerald-500/20',
   },
   warning: {
-    icon: 'bg-amber-100 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400',
+    icon: 'bg-amber-500/10 text-amber-500',
+    border: 'border-amber-500/20',
   },
   info: {
-    icon: 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400',
+    icon: 'bg-blue-500/10 text-blue-500',
+    border: 'border-blue-500/20',
   },
   danger: {
-    icon: 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400',
+    icon: 'bg-red-500/10 text-red-500',
+    border: 'border-red-500/20',
   },
 };
 
@@ -33,21 +38,21 @@ export function StatCard({ title, value, subtitle, icon, variant = 'default', tr
   const styles = variantStyles[variant] || variantStyles.default;
 
   const trendColors = {
-    up: 'text-emerald-600 dark:text-emerald-400',
-    down: 'text-red-600 dark:text-red-400',
-    neutral: 'text-slate-500 dark:text-slate-400',
+    up: 'text-emerald-500',
+    down: 'text-red-500',
+    neutral: 'text-zinc-500',
   };
 
   return (
-    <div className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm dark:border-slate-700/50 dark:bg-slate-900/50 card-hover">
+    <div className={`rounded-xl border ${styles.border} bg-zinc-900 p-5 transition-all hover:border-zinc-700`}>
       <div className="flex items-start justify-between">
-        <div>
-          <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{title}</p>
-          <p className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+        <div className="flex-1">
+          <p className="text-sm font-medium text-zinc-500">{title}</p>
+          <p className="mt-2 text-3xl font-bold tracking-tight text-zinc-100">
             {value}
           </p>
           {subtitle && (
-            <p className={`mt-1 flex items-center gap-1 text-sm font-medium ${trend ? trendColors[trend] : 'text-slate-500 dark:text-slate-400'}`}>
+            <p className={`mt-1 flex items-center gap-1 text-sm ${trend ? trendColors[trend] : 'text-zinc-500'}`}>
               {trend === 'up' && (
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
@@ -63,7 +68,7 @@ export function StatCard({ title, value, subtitle, icon, variant = 'default', tr
           )}
         </div>
         {icon && (
-          <div className={`rounded-xl p-3 ${styles.icon}`}>
+          <div className={`rounded-lg p-2.5 ${styles.icon}`}>
             {icon}
           </div>
         )}
@@ -86,7 +91,7 @@ export function StatsGrid({ children }: StatsGridProps) {
 
 export function CalendarIcon() {
   return (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
     </svg>
   );
@@ -94,7 +99,7 @@ export function CalendarIcon() {
 
 export function CheckCircleIcon() {
   return (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   );
@@ -102,7 +107,7 @@ export function CheckCircleIcon() {
 
 export function ClockIcon() {
   return (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
   );
@@ -110,7 +115,7 @@ export function ClockIcon() {
 
 export function UsersIcon() {
   return (
-    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
     </svg>
   );

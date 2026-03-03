@@ -10,7 +10,7 @@ export function Skeleton({ className }: SkeletonProps) {
   return (
     <div
       className={cn(
-        'skeleton',
+        'animate-pulse rounded-lg bg-zinc-800',
         className
       )}
     />
@@ -44,7 +44,7 @@ interface SkeletonCardProps {
 
 export function SkeletonCard({ className }: SkeletonCardProps) {
   return (
-    <div className={cn('rounded-xl border border-card-border bg-card p-4 space-y-4', className)}>
+    <div className={cn('rounded-xl border border-zinc-800 bg-zinc-900 p-4 space-y-4', className)}>
       <div className="flex items-center gap-3">
         <Skeleton className="h-10 w-10 rounded-full" />
         <div className="space-y-2 flex-1">
@@ -67,7 +67,7 @@ export function SkeletonTable({ rows = 5, columns = 4, className }: SkeletonTabl
   return (
     <div className={cn('space-y-3', className)}>
       {/* Header */}
-      <div className="flex gap-4 pb-2 border-b border-card-border">
+      <div className="flex gap-4 pb-2 border-b border-zinc-800">
         {Array.from({ length: columns }).map((_, i) => (
           <Skeleton key={i} className="h-4 flex-1" />
         ))}
@@ -99,7 +99,7 @@ export function SkeletonStats({ count = 4, className }: SkeletonStatsProps) {
   return (
     <div className={cn('grid gap-4 grid-cols-2 lg:grid-cols-4', className)}>
       {Array.from({ length: count }).map((_, i) => (
-        <div key={i} className="rounded-xl border border-card-border bg-card p-4 space-y-3">
+        <div key={i} className="rounded-xl border border-zinc-800 bg-zinc-900 p-5 space-y-3">
           <div className="flex items-center justify-between">
             <Skeleton className="h-4 w-20" />
             <Skeleton className="h-8 w-8 rounded-lg" />
