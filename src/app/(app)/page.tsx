@@ -1,15 +1,34 @@
 'use client';
 
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/lib/store';
 import { AppointmentList } from '@/components/appointments/AppointmentList';
 import { AppointmentAdd } from '@/components/appointments/AppointmentAdd';
 import { DashboardStats } from '@/components/dashboard/DashboardStats';
 import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
 
+function getGreeting(): string {
+  const h = new Date().getHours();
+  if (h < 12) return 'Bonjour';
+  if (h < 18) return 'Bon après-midi';
+  return 'Bonsoir';
+}
+
+function formatDate(): string {
+  return new Date().toLocaleDateString('fr-FR', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+
 export default function HomePage() {
   const [openModal, setOpenModal] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const handleClose = () => {
     setRefreshTrigger((prev) => !prev);
@@ -18,36 +37,53 @@ export default function HomePage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      {/* En-tête personnalisé */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
-            Tableau de bord
+          <p className="text-sm font-medium capitalize text-emerald-600 dark:text-emerald-400">
+            {formatDate()}
+          </p>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100 sm:text-3xl">
+            {getGreeting()}, {user?.firstName} 👋
           </h1>
-          <p className="mt-1 text-zinc-600 dark:text-zinc-500">
-            Gerez vos rendez-vous et consultez les statistiques
+          <p className="mt-1 text-zinc-500 dark:text-zinc-400">
+            Voici un aperçu de vos rendez-vous du moment.
           </p>
         </div>
-        <Button
-          onClick={() => setOpenModal(true)}
-          icon={
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-          }
-        >
-          Nouveau RDV
-        </Button>
+        <div className="flex shrink-0 items-center gap-3">
+          <Button
+            onClick={() => setOpenModal(true)}
+            size="lg"
+            icon={
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+            }
+          >
+            Nouveau RDV
+          </Button>
+        </div>
       </div>
 
+      {/* Statistiques */}
       <DashboardStats refreshTrigger={refreshTrigger} />
 
-      <div className="rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
-        <div className="border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
-          <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Rendez-vous recents</h2>
+      {/* Liste des rendez-vous */}
+      <div className="overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="flex items-center justify-between border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
+          <div>
+            <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">
+              Mes rendez-vous
+            </h2>
+            <p className="mt-0.5 text-xs text-zinc-500">
+              Filtrés par mois — triés par date de création
+            </p>
+          </div>
         </div>
         <AppointmentList refreshTrigger={refreshTrigger} />
       </div>
 
+      {/* Modal nouveau RDV */}
       <Modal
         isOpen={openModal}
         onClose={() => setOpenModal(false)}
