@@ -77,7 +77,7 @@ export default function AdminPage() {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
           <Link href="/manager">
             <Button
               variant="ghost"
@@ -90,6 +90,16 @@ export default function AdminPage() {
             >
               Vue manager
             </Button>
+          </Link>
+          <Link
+            href="/admin/history"
+            title="Historique des actions"
+            aria-label="Historique des actions"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-700 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+          >
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
           </Link>
           <Link href="/users">
             <Button

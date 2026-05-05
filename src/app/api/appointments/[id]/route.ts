@@ -1,9 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
 import Appointment from '@/lib/models/Appointment';
-import AppointmentHistory from '@/lib/models/AppointmentHistory';
-import User from '@/lib/models/User';
 import { requireAdmin, requireAdminOrModerator, requireAuth } from '@/lib/auth';
+import { buildChanges, logActivity } from '@/lib/utils/activityLog';
+
+const EDITABLE_FIELDS = [
+  'date',
+  'time',
+  'name',
+  'phone_1',
+  'phone_2',
+  'address',
+  'commercial',
+  'comment',
+  'status',
+  'reminderDate',
+] as const;
+
+interface AppointmentLean {
+  _id: { toString: () => string };
+  name?: string;
+  date?: string;
+  time?: string;
+  status?: string;
+  [key: string]: unknown;
+}
+
+function buildLabel(apt: AppointmentLean | null | undefined): string {
+  if (!apt) return '';
+  return `${apt.name ?? '—'} — ${apt.date ?? ''} ${apt.time ?? ''}`.trim();
+}
 
 export async function GET(
   req: NextRequest,
@@ -40,31 +66,18 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await requireAdminOrModerator(req);
+    const { userId: actorId } = await requireAdminOrModerator(req);
     await connectDB();
 
     const { id } = await params;
     const data = await req.json();
 
-    const fields = [
-      'date',
-      'time',
-      'name',
-      'phone_1',
-      'phone_2',
-      'address',
-      'commercial',
-      'comment',
-      'status',
-      'reminderDate',
-    ];
     const update: Record<string, unknown> = {};
-    fields.forEach((f) => {
+    for (const f of EDITABLE_FIELDS) {
       if (data[f] !== undefined) update[f] = data[f];
-    });
+    }
 
-    // Récupérer l'état avant modification pour l'audit trail
-    const before = await Appointment.findById(id).lean().exec();
+    const before = await Appointment.findById(id).lean<AppointmentLean>().exec();
     if (!before) {
       return NextResponse.json(
         { success: false, message: 'Appointment not found' },
@@ -80,21 +93,20 @@ export async function PUT(
       );
     }
 
-    // Construire le diff des champs modifiés
-    const { userId: actorId } = await requireAdminOrModerator(req).catch(() => ({ userId: '' }));
-    const changes: Record<string, { from: unknown; to: unknown }> = {};
-    for (const field of Object.keys(update)) {
-      const prev = (before as Record<string, unknown>)[field];
-      const next = update[field];
-      if (String(prev) !== String(next)) {
-        changes[field] = { from: prev, to: next };
-      }
-    }
+    const changes = buildChanges(
+      before as Record<string, unknown>,
+      update,
+      Object.keys(update)
+    );
+
     if (Object.keys(changes).length > 0) {
-      await AppointmentHistory.create({
-        appointmentId: id,
-        actorId: actorId || undefined,
+      await logActivity({
+        req,
+        actorId,
         action: 'updated',
+        targetType: 'Appointment',
+        targetId: id,
+        targetLabel: buildLabel(before),
         changes,
       });
     }
@@ -114,11 +126,11 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await requireAdmin(req);
+    const { userId: actorId } = await requireAdmin(req);
     await connectDB();
 
     const { id } = await params;
-    const { userId: actorId } = await requireAdmin(req).catch(() => ({ userId: '' }));
+    const before = await Appointment.findById(id).lean<AppointmentLean>().exec();
     const appointment = await Appointment.findByIdAndDelete(id);
 
     if (!appointment) {
@@ -128,11 +140,13 @@ export async function DELETE(
       );
     }
 
-    // Audit trail — suppression
-    await AppointmentHistory.create({
-      appointmentId: id,
-      actorId: actorId || undefined,
+    await logActivity({
+      req,
+      actorId,
       action: 'deleted',
+      targetType: 'Appointment',
+      targetId: id,
+      targetLabel: buildLabel(before),
       changes: {},
     });
 

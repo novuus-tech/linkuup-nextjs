@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db';
-import AppointmentHistory from '@/lib/models/AppointmentHistory';
+import ActivityLog from '@/lib/models/ActivityLog';
 import { requireAdminOrModerator } from '@/lib/auth';
 
 export async function GET(
@@ -12,7 +12,10 @@ export async function GET(
     await connectDB();
 
     const { id } = await params;
-    const history = await AppointmentHistory.find({ appointmentId: id })
+    const history = await ActivityLog.find({
+      targetType: 'Appointment',
+      targetId: id,
+    })
       .populate('actorId', 'firstName lastName')
       .sort({ createdAt: -1 })
       .limit(50)

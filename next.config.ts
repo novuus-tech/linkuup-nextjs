@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 
 const securityHeaders = [
   {
@@ -47,6 +48,12 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Épingle la racine au dossier du projet pour éviter qu'un package-lock.json
+  // parent (ex: C:\Users\mopen\Downloads\package-lock.json) soit choisi à tort
+  // comme workspace root par Turbopack.
+  turbopack: {
+    root: path.resolve(__dirname),
+  },
   async headers() {
     return [
       {
@@ -55,7 +62,6 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  // Limit request body size to 1MB
   experimental: {
     serverActions: {
       bodySizeLimit: "1mb",

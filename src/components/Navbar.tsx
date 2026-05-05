@@ -179,6 +179,18 @@ export function Navbar() {
                     {user?.email}
                   </p>
                 </div>
+                {hasRole('ROLE_ADMIN') && (
+                  <Link
+                    href="/admin/history"
+                    role="menuitem"
+                    className="flex w-full items-center gap-2.5 border-b border-zinc-200 px-4 py-2.5 text-left text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-800"
+                  >
+                    <svg className="h-4 w-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Historique
+                  </Link>
+                )}
                 <button
                   type="button"
                   role="menuitem"

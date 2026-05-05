@@ -4,6 +4,7 @@ import connectDB from '@/lib/db';
 import User from '@/lib/models/User';
 import Role from '@/lib/models/Role';
 import { requireAdmin } from '@/lib/auth';
+import { logActivity } from '@/lib/utils/activityLog';
 import bcrypt from 'bcryptjs';
 
 const SALT_ROUNDS = 12;
@@ -55,7 +56,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    await requireAdmin(req);
+    const { userId: actorId } = await requireAdmin(req);
     await connectDB();
 
     const body = await req.json().catch(() => ({}));
@@ -89,6 +90,22 @@ export async function POST(req: NextRequest) {
       isActive: isActive ?? false,
     });
     await user.save();
+
+    await logActivity({
+      req,
+      actorId,
+      action: 'created',
+      targetType: 'User',
+      targetId: user._id.toString(),
+      targetLabel: `${firstName} ${lastName} (${email})`,
+      changes: {
+        firstName: { from: null, to: firstName },
+        lastName: { from: null, to: lastName },
+        email: { from: null, to: email },
+        roles: { from: null, to: roleNames },
+        isActive: { from: null, to: isActive ?? false },
+      },
+    });
 
     return NextResponse.json({ success: true, message: 'Utilisateur créé avec succès.' }, { status: 201 });
   } catch (err) {

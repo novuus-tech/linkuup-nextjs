@@ -8,6 +8,8 @@ const ThemeContext = createContext<{
   theme: Theme;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
+  /** true une fois le thème synchronisé avec le DOM côté client (évite les hydration mismatches) */
+  mounted: boolean;
 } | null>(null);
 
 const STORAGE_KEY = 'linkuup-theme';
@@ -39,7 +41,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const toggleTheme = () => setThemeState((prev) => (prev === 'dark' ? 'light' : 'dark'));
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, mounted }}>
       {children}
     </ThemeContext.Provider>
   );

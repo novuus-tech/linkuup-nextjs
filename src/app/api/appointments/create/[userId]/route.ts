@@ -4,6 +4,7 @@ import connectDB from '@/lib/db';
 import Appointment from '@/lib/models/Appointment';
 import User from '@/lib/models/User';
 import { requireAuth } from '@/lib/auth';
+import { logActivity } from '@/lib/utils/activityLog';
 
 const createAppointmentSchema = z.object({
   date: z.string().min(1, 'Date requise').regex(/^\d{4}-\d{2}-\d{2}$/, 'Format de date invalide'),
@@ -21,7 +22,7 @@ export async function POST(
   { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
-    await requireAuth(req);
+    const { userId: actorId } = await requireAuth(req);
     await connectDB();
 
     const { userId } = await params;
@@ -40,6 +41,17 @@ export async function POST(
     }
 
     const appointment = await Appointment.create({ userId, ...parsed.data });
+
+    await logActivity({
+      req,
+      actorId,
+      action: 'created',
+      targetType: 'Appointment',
+      targetId: appointment._id.toString(),
+      targetLabel: `${parsed.data.name} — ${parsed.data.date} ${parsed.data.time}`,
+      changes: {},
+    });
+
     return NextResponse.json({ appointment }, { status: 201 });
   } catch (err) {
     console.error('Create appointment error:', err);
