@@ -3,8 +3,8 @@
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider, MutationCache } from '@tanstack/react-query';
 import { store } from '@/lib/store';
-import { setApiUnauthorizedHandler } from '@/lib/api-client';
-import { logout } from '@/lib/store/slices/authSlice';
+import { setApiUnauthorizedHandler, setApiRefreshSuccessHandler } from '@/lib/api-client';
+import { logout, updateRoles } from '@/lib/store/slices/authSlice';
 import { error as alertError } from '@/lib/store/slices/alertSlice';
 import { getErrorMessage } from '@/lib/utils/errors';
 import { ThemeProvider } from '@/components/ThemeProvider';
@@ -41,5 +41,8 @@ export function setupApiInterceptors() {
   setApiUnauthorizedHandler(() => {
     store.dispatch(logout());
     window.location.href = '/auth/signin';
+  });
+  setApiRefreshSuccessHandler((roles) => {
+    store.dispatch(updateRoles(roles));
   });
 }

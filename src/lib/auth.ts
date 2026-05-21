@@ -30,8 +30,9 @@ export function getToken(req: NextRequest): string | null {
 export async function verifyToken(req: NextRequest): Promise<{ userId: string } | null> {
   const token = getToken(req);
   if (!token) return null;
+  if (!JWT_SECRET) return null;
   try {
-    const decoded = jwt.verify(token, JWT_SECRET || 'secret') as { id: string };
+    const decoded = jwt.verify(token, JWT_SECRET) as { id: string };
     return { userId: decoded.id };
   } catch {
     return null;
