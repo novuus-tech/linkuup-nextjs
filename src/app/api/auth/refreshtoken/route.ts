@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import connectDB from '@/lib/db';
 import RefreshToken from '@/lib/models/RefreshToken';
+import User from '@/lib/models/User';
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_ACCESS_LIFETIME = parseInt(process.env.JWT_LIFETIME_ACCESS || '3600', 10);
@@ -20,7 +21,6 @@ export async function POST(req: NextRequest) {
   try {
     await connectDB();
 
-    // Lire le refresh token depuis le cookie httpOnly
     const requestToken = req.cookies.get('refreshToken')?.value;
     if (!requestToken) {
       return NextResponse.json(
@@ -53,15 +53,37 @@ export async function POST(req: NextRequest) {
     }
 
     const user = storedToken.user as { _id: { toString: () => string } };
+
+    // Verify account is still active and fetch fresh roles
+    const freshUser = await User.findById(user._id).populate('roles', '-__v').exec();
+    if (!freshUser) {
+      await RefreshToken.findByIdAndDelete(storedToken._id);
+      return NextResponse.json(
+        { success: false, message: 'Compte introuvable.' },
+        { status: 401 }
+      );
+    }
+    if (freshUser.isActive === false) {
+      await RefreshToken.findByIdAndDelete(storedToken._id);
+      return NextResponse.json(
+        { success: false, message: 'Compte désactivé. Contactez l\'administrateur.' },
+        { status: 403 }
+      );
+    }
+
+    const authorities: string[] = freshUser.roles.map(
+      (r: { name: string }) => `ROLE_${r.name.toUpperCase()}`
+    );
+
     const newAccessToken = createAccessToken(user._id.toString());
 
-    // Rotation du refresh token
+    // Rotate refresh token
     await RefreshToken.findByIdAndDelete(storedToken._id);
     const newRefreshToken = await (RefreshToken as unknown as {
       createToken: (u: { _id: unknown }) => Promise<string>;
     }).createToken(user);
 
-    const response = NextResponse.json({ success: true });
+    const response = NextResponse.json({ success: true, roles: authorities });
     const base = { httpOnly: true, secure: IS_PROD, sameSite: 'lax' as const, path: '/' };
     response.cookies.set('accessToken', newAccessToken, { ...base, maxAge: JWT_ACCESS_LIFETIME });
     response.cookies.set('refreshToken', newRefreshToken, { ...base, maxAge: JWT_REFRESH_LIFETIME });

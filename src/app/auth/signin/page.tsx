@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -156,6 +157,15 @@ export default function SignInPage() {
               }
               {...register('password')}
             />
+
+            <div className="flex justify-end">
+              <Link
+                href="/auth/forgot-password"
+                className="text-sm text-emerald-600 hover:text-emerald-500 dark:text-emerald-400"
+              >
+                Mot de passe oublié&nbsp;?
+              </Link>
+            </div>
 
             <Button
               type="submit"

@@ -117,8 +117,12 @@ const authSlice = createSlice({
       state.roles = [];
       state.isLogged = false;
     },
+    updateRoles: (state, action: { payload: string[] }) => {
+      state.roles = action.payload;
+      if (state.user) saveSession(state.user, action.payload);
+    },
   },
 });
 
-export const { setAuth, clearAuth } = authSlice.actions;
+export const { setAuth, clearAuth, updateRoles } = authSlice.actions;
 export default authSlice.reducer;

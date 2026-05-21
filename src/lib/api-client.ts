@@ -18,9 +18,14 @@ export const apiClient = axios.create({
 });
 
 let onUnauthorized: (() => void) | null = null;
+let onRefreshSuccess: ((roles: string[]) => void) | null = null;
 
 export function setApiUnauthorizedHandler(handler: () => void): void {
   onUnauthorized = handler;
+}
+
+export function setApiRefreshSuccessHandler(handler: (roles: string[]) => void): void {
+  onRefreshSuccess = handler;
 }
 
 /** Routes d'auth pour lesquelles on NE doit PAS tenter de refresh. */
@@ -40,8 +45,10 @@ let refreshPromise: Promise<void> | null = null;
 function refreshSession(): Promise<void> {
   if (!refreshPromise) {
     refreshPromise = apiClient
-      .post('/auth/refreshtoken', null, { _skipAuthRefresh: true } as AxiosRequestConfig)
-      .then(() => undefined)
+      .post<{ success: boolean; roles?: string[] }>('/auth/refreshtoken', null, { _skipAuthRefresh: true } as AxiosRequestConfig)
+      .then((res) => {
+        if (res.data.roles?.length) onRefreshSuccess?.(res.data.roles);
+      })
       .finally(() => {
         refreshPromise = null;
       });

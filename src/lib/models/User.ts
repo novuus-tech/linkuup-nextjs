@@ -8,6 +8,8 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     roles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Role' }],
     isActive: { type: Boolean, default: false },
+    passwordResetToken: { type: String, default: null, index: true },
+    passwordResetExpiry: { type: Date, default: null },
     createdAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
